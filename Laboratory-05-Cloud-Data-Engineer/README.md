@@ -36,17 +36,5 @@ The main goal of this activity was to create an S3-compatible object storage ser
 * Creating buckets and uploading objects.
 * Writing technical documentation in Markdown.
 
-## Mission Output
 
-The MinIO server was successfully deployed using Docker. A bucket named `client-photos` was created through the MinIO Web Console, and a sample file was uploaded successfully.
-
-## Screenshots
-
-### MinIO Server Deployment
-
-![MinIO Deployment](screenshots/minio-deployed.png)
-
-### Bucket and Uploaded File
-
-![MinIO Bucket Upload](screenshots/minio-bucket-upload.png)
 
