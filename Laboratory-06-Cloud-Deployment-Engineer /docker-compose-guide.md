@@ -1,17 +1,18 @@
-# Multi-Tier Architecture
+# Docker Compose Guide
 
-## What is Two-Tier Architecture?
+## What is Docker Compose?
 
-A two-tier architecture is a system that separates an application into two main parts: the application tier and the database tier. In this laboratory, Nextcloud works as the application tier while MariaDB works as the database tier.
+Docker Compose is a tool used to define and run multiple containers as one application. It uses a YAML file to describe the services, settings, ports, and environment variables needed by the application.
 
-## The Web/Application Tier
+## The `services:` Block
 
-The web/application tier is responsible for providing the user interface and handling requests from users. In this laboratory, the Nextcloud container provides the web interface that users access through a browser.
+The `services:` block defines the containers that will be created and managed by Docker Compose.
 
-## The Database Tier
+In this laboratory, there are two services:
 
-The database tier stores important and persistent information used by the application. MariaDB stores information such as user accounts, file metadata, and other Nextcloud data.
-
-## Why Separate Them?
-
-Separating the web application and database into different containers makes the system easier to manage and maintain. Each container has a specific job, and the containers can be updated, restarted, or scaled separately without putting everything into one container.
+```yaml
+services:
+  database:
+    ...
+  app:
+    ...
