@@ -1,1 +1,48 @@
+services:
+  db:
+    image: mariadb:11.4
+    container_name: cloudnova-db
+    restart: unless-stopped
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    environment:
+      MARIADB_DATABASE: ${MYSQL_DATABASE}
+      MARIADB_USER: ${MYSQL_USER}
+      MARIADB_PASSWORD: ${MYSQL_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - cloudnova-net
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  nextcloud:
+    image: nextcloud:apache
+    container_name: cloudnova-nextcloud
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_HOST: db
+    volumes:
+      - nextcloud_data:/var/www/html
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - cloudnova-net
+
+volumes:
+  db_data:
+  nextcloud_data:
+
+networks:
+  cloudnova-net:
+    driver: bridge
 
